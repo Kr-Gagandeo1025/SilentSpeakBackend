@@ -1,17 +1,27 @@
-const express = require('express');
+const app = require('express')();
+const server = require("http").createServer(app);
 const bodyParser = require('body-parser');
-const {Server} = require('socket.io');
+const cors = require("cors");
 
-const io = new Server({
-    cors:true,
+const io = require("socket.io")(server,{
+    cors:{
+        origin:"*",
+        method:[ "GET", "POST" ] 
+    }
 });
-const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
+
+const PORT = process.env.PORT || 8000;
 
 const emailToSocketMap = new Map();
 const socketToEmailMap = new Map();
 
+
+app.get('/',(req,res)=>{
+    res.send('Running');
+})
 
 //creating a socket ipc for connection to room
 io.on('connection', (socket) => {
@@ -49,7 +59,4 @@ io.on('connection', (socket) => {
     })
 });
 
-app.listen(8000,()=>{
-    console.log("Server running at port 8000");
-})
-io.listen(8001);
+server.listen(PORT,() => console.log(`Server is running on port ${PORT}`));
