@@ -41,6 +41,12 @@ io.on('connection', (socket) => {
     socket.on("peer:nego:done",({to,ans})=>{
         io.to(to).emit("peer:nego:final",{from:socket.id, ans});
     })
+
+    socket.on("send-msg",(data)=>{
+        // io.emit("receive-msg",{message});
+        console.log(data);
+        socket.broadcast.emit("receive-msg",data);
+    })
 });
 
 app.listen(8000,()=>{
