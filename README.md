@@ -22,4 +22,7 @@ To start project in local host
 ```
 
 
+Link to the github repo of trained model for SilentSpeak https://github.com/oppenheimer1601/SilentSpeak
+
+
 
